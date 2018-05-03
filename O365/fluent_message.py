@@ -164,13 +164,13 @@ class Message(object):
                                        auth=self.auth,
                                        verify=self.verify)
         except requests.RequestException as e:
-            logging.error("Error deleting message: %s" % e)
+            log.error("Error deleting message: %s" % e)
             return False
 
         if response.status_code is 204:  # Documented success status code
             return True
         else:
-            logging.error("Error deleting message (status code: %d)" % response.status_code)
+            log.error("Error deleting message (status code: %d)" % response.status_code)
             return False
 
     def getSender(self):
