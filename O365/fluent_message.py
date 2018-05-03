@@ -150,6 +150,29 @@ class Message(object):
 
         return True
 
+    def delete(self):
+        """
+        Delete the message
+        :return: True on success
+        """
+        delete_url = 'https://outlook.office.com/api/v2.0/me/messages/{0}'
+        headers = {'Content-type': 'application/json',
+                   'Accept': 'application/json'}
+        try:
+            response = requests.delete(delete_url.format(self.json['Id']),
+                                       headers=headers,
+                                       auth=self.auth,
+                                       verify=self.verify)
+        except requests.RequestException as e:
+            logging.error("Error deleting message: %s" % e)
+            return False
+
+        if response.status_code is 204:  # Documented success status code
+            return True
+        else:
+            logging.error("Error deleting message (status code: %d)" % response.status_code)
+            return False
+
     def getSender(self):
         '''get all available information for the sender of the email.'''
         return self.json['Sender']
