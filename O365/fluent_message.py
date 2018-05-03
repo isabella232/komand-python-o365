@@ -167,7 +167,7 @@ class Message(object):
             logging.error("Error deleting message: %s" % e)
             return False
 
-        if response.status_code is 204:
+        if response.status_code is 204:  # Documented success status code
             return True
         else:
             logging.error("Error deleting message (status code: %d)" % response.status_code)
